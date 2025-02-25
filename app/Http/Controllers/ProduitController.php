@@ -25,13 +25,32 @@ class ProduitController extends Controller
     
     public function Creation_produit(Request $request)
 {
-    $request->validate([
+    $c = $request->validate([
+        "image" => 'image|mimes:jpeg,png,jpg,gif,svg,avif|max:2048',
         'NomProduit' => 'required|string|max:255',
         'Description' => 'required|string',
         'Categorie_id' => 'required|exists:categories,id',
     ]);
 
-    Produit::create($request->all());
+
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+
+        $c['image'] = "public/images/" . $name;
+    }
+    
+
+
+
+
+
+
+
+    Produit::create($c);
     return redirect('/showprod')->with('success', 'Produit ajouté avec succès');
 }
 

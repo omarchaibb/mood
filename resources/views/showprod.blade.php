@@ -29,24 +29,30 @@
 
 @section('contenu')
 <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-    <ul class="space-y-4">
+    <ul class="space-y-z flex flex-wrap gap-4">
         @foreach ($produits as $produit)
-            <li class="p-4 border-b border-gray-700 hover:bg-gray-700 transition duration-300">
-                <h4 class="text-xl font-semibold text-gray-100">
-                    <a href="#" class="text-indigo-400 hover:text-indigo-300 transition duration-300">{{ $produit->NomProduit }}</a>
-                </h4>
-                <p class="text-gray-300 mt-2">{{ $produit->Description }}</p>
-                @auth 
-                    <div class="mt-4 flex space-x-4">
-                        <a href="{{ url('/nouveau') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300">Ajouter</a>
-                        <a href="{{ url('/edition/' . $produit->id) }}" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-500 transition duration-300">Editer</a>
-                        <form action="{{ url('/delete/' . $produit->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition duration-300">Supprimer</button>
-                        </form>
-                    </div>
-                @endauth
+            <li class="bg-slate-900 rounded-lg p-4 border-b border-gray-700 hover:bg-gray-700 transition duration-300">
+                <div>
+                    <img src={{ asset($produit->image) }} alt="">
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold text-gray-100">
+                        <a href="#" class="text-indigo-400 hover:text-indigo-300 transition duration-300">{{ $produit->NomProduit }}</a>
+                    </h4>
+                    <p class="text-gray-300 mt-2">{{ $produit->Description }}</p>
+                    {{-- @auth  --}}
+                        <div class="mt-4 flex space-x-4">
+                            <a href="{{ url('/nouveau') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition duration-300">Ajouter</a>
+                            <a href="{{ url('/edition/' . $produit->id) }}" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-500 transition duration-300">Editer</a>
+                            <form action="{{ url('/delete/' . $produit->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition duration-300">Supprimer</button>
+                            </form>
+                        </div>
+                    {{-- @endauth --}}
+                </div>
+              
             </li>
         @endforeach
     </ul>

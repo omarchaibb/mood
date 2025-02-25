@@ -5,11 +5,29 @@
 @stop
 
 @section('contenu')
-    <form action="{{ route('creationProd') }}" method="POST" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        @if ($errors->any())
+    <div class="bg-red-700 p-4 rounded-lg mb-6">
+        <ul class="space-y-2">
+            @foreach ($errors->all() as $error)
+                <li class="text-white">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+    </div>
+    <form action="{{ route('creationProd') }}" method="POST" class="bg-gray-800 p-6 rounded-lg shadow-lg" enctype="multipart/form-data">
         @csrf
         <div class="mb-6">
             <label for="NomProduit" class="block text-sm font-medium text-gray-300 mb-2">Product Name</label>
             <input type="text" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 transition duration-300" id="NomProduit" name="NomProduit" required>
+        </div>
+        <div class="mb-6">
+            <label for="NomProduit" class="block text-sm font-medium text-gray-300 mb-2">image</label>
+            <input type="file" accept="image/*" name="image" id="image" required>
+
         </div>
 
         <div class="mb-6">
